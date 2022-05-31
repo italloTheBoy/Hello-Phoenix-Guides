@@ -46,5 +46,12 @@ defmodule HelloWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+  plug :hello
   plug HelloWeb.Router
+
+  def hello(conn, _params) do
+    IO.puts "\nHello plugs!\n"
+
+    conn
+  end
 end
