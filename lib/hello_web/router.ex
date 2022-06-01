@@ -15,13 +15,27 @@ defmodule HelloWeb.Router do
     plug :accepts, ["json"]
   end
 
+
   scope "/", HelloWeb do
     pipe_through :browser
 
     get "/", PageController, :index
-    get "/hello", HelloController, :hello
-    get "/hello/itallo", HelloController, :hello_itallo
-    get "/hello/:name", HelloController, :hello_to
+  end
+ 
+  scope "/hello", HelloWeb do
+    pipe_through :browser
+
+    get "/", HelloController, :hello
+    get "/itallo", HelloController, :hello_itallo
+    get "/:name", HelloController, :hello_to
+  end
+
+  scope "/users", HelloWeb do
+    pipe_through :browser
+
+    resources "/", UserController, except: [:delete] do
+      resources "/posts", PostController
+    end
   end
 
   # Other scopes may use custom stacks.

@@ -1,10 +1,14 @@
-<section class="phx-hero">
+<main class="phx-hero">
+  <navbar>
+    <%= link "Home", to: Routes.page_path(@conn, :index) %>
+  </navbar>
+
   <%= if assigns[:name] do %>
     <h2>Hello <%= @name %>!!!</h2>
   <%= else  %>
     <h2>Hello world!!!</h2>
   <% end %>
-</section>
+</main>
 
 <hr>
 
