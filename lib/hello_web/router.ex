@@ -8,6 +8,10 @@ defmodule HelloWeb.Router do
     plug :put_root_layout, {HelloWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+  end
+
+  pipeline :custom_browser do
+    plug :browser
     plug HelloWeb.Plugs.Language, "en"
   end
 
@@ -23,7 +27,7 @@ defmodule HelloWeb.Router do
   end
  
   scope "/hello", HelloWeb do
-    pipe_through :browser
+    pipe_through :custom_browser
 
     get "/", HelloController, :hello
     get "/itallo", HelloController, :hello_itallo
@@ -32,16 +36,21 @@ defmodule HelloWeb.Router do
 
   scope "/users", HelloWeb do
     pipe_through :browser
-
-    resources "/", UserController, except: [:delete] do
+    pipe_through :api
+    
+    resources "/", UserController, except: [:index] do
       resources "/posts", PostController
     end
+
+    get "/say/:name", UserController, :say_name
+    get "/perfil/:name/:age/:gender", UserController, :perfil
+    get "/api/perfil/:name/:age/:gender", UserController, :perfil_api
   end
 
   # Other scopes may use custom stacks.
   # scope "/api", HelloWeb do
   #   pipe_through :api
-  # end
+  # end   
 
   # Enables LiveDashboard only for development
   #
