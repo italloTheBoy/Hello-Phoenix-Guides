@@ -10,7 +10,8 @@ defmodule HelloWeb.PageController do
 
   def redirection(conn, _params) do
     conn
-    |> render("index.html")
+    |> render("index.html", hero: "phx-hero")
     
   end 
 end
+

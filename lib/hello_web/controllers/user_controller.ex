@@ -31,9 +31,9 @@ defmodule HelloWeb.UserController do
     "age" => _age,
     "gender" => _gender
   } = params) do
-  conn
-  |> put_status(200)
-  |> json(params)
+    conn
+    |> put_status(200)
+    |> json(params)
   end
 
   defp bruno?(name) do
